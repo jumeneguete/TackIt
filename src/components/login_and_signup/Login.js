@@ -11,7 +11,7 @@ export default function Login() {
             <LogoImg />
             <Input type="text" placeholder="senhemaila" />
             <Input type="password" placeholder="senha" />
-            <Button buttonText = "Entrar"></Button>
+            <Button>Entrar</Button>
         </Main>
 
     );
