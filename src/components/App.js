@@ -1,6 +1,8 @@
 import GlobalStyle from "../GlobalStyle";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Login from "./login_and_signup/Login";
+import SignUp from "./login_and_signup/SingUp";
+import Habits from "./habits/Habits";
 
 
 export default function App() {
@@ -14,7 +16,12 @@ export default function App() {
                     <Route path="/" exact>
                         <Login />
                     </Route>
-
+                    <Route path="/signup" exact>
+                        <SignUp />
+                    </Route>
+                    <Route path="/habits" exact>
+                        <Habits />
+                    </Route>
                 </Switch>
             </BrowserRouter>
 

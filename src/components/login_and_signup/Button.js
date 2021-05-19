@@ -1,17 +1,24 @@
 import styled from "styled-components"
 
-export default function Button() {
+export default function Button({children}) {
     return (
-        <Button></Button>
+        <ButtonStyle>{children}</ButtonStyle>
     );
 }
 
 const ButtonStyle = styled.button`
     width: 80%;
-    margin: 10px auto;
     height: 45px;
+    color: #fff;
+    font-size:20px;
+    font-weight:bold;
+    letter-spacing: 1px;
+    margin: 10px auto;
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     background-color: #55B3F7;
-    color: #fff;
+    
+    &:hover{
+        background-color: #317bb0;
+    }
 `;

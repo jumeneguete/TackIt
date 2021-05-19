@@ -8,6 +8,7 @@ export default function Input({ type, placeholder, value }) {
 
 const InputStyle = styled.input`
     width: 80%;
+    padding-left: 10px;
     margin: 10px auto;
     height: 45px;
     border: 1px solid #D5D5D5;
