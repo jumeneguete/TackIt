@@ -17,8 +17,6 @@ export default function AddHabitBox({ hide }) {
         { day: 7, name: "S", available: true }
     ]
 
-    console.log(user)
-
     function selectDay(day) {
         const same = days.filter(n => n === day);
 
@@ -29,10 +27,14 @@ export default function AddHabitBox({ hide }) {
         }
 
         const newArray = [...days, day];
-        daysOfTheWeek.forEach(dia => dia.available === day ? dia.available = false : dia.available = false)
+        //daysOfTheWeek.forEach(dia => dia.available === day ? dia.available = false : dia.available = false) 
+        //Esse filter não funciona por nada!!
         setDays(newArray);
     }
 
+    console.log(user)
+    //essa função não está enviando.. nem o botão faz nada, mesmo com o type="submit"
+    //esse user não está retornando nada :(
     function addHabit (){
         const body = {name, days};
         const config = {
@@ -50,11 +52,14 @@ export default function AddHabitBox({ hide }) {
     console.log(days)
     console.log(daysOfTheWeek)
 
+    
+
     return (
         <Container hide={hide}>
             <form onSubmit={addHabit}>
                 <InputStyle type="text" placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
                 <Days>
+                    {/* Essa classe não funciona, mesmo eu adicionando ela direto, sem lógica por tras */}
                     {daysOfTheWeek.map(d => (
                         <Day key={d.day} onClick={() => selectDay(d.day)} className={`${!d.available ? "unavailable" : ""} `}>{d.name}</Day>
                     ))}
