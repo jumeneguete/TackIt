@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function Header (){
+export default function Header ({image}){
     return (
-        <HeaderStyle>
+        <HeaderStyle url={image}>
             <span>TrackIt</span>
             <div> </div>
         </HeaderStyle>   
@@ -33,7 +33,7 @@ const HeaderStyle = styled.header`
         width: 60px;
         height: 60px;
         border-radius: 70px;
-        background-image: url("https://cdn.fastly.picmonkey.com/contentful/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg");
+        background-image: ${props => props.url ? `url(${props.url})` : ""};
         background-size: cover;
         background-repeat: no-repeat;
     }

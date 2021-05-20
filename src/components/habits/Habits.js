@@ -5,13 +5,15 @@ import AddHabitBox from "./AddHabitBox";
 import HabitBox from "./HabitBox";
 import HeaderHabits from "./HeaderHabits";
 import MessageHabits from "./MessageHabits";
-
-
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
 
 export default function Habits() {
+    const {user} = useContext(UserContext);
+
     return (
         <>
-        <Header />
+         <Header image={user.image}/>
             <Container>
                 <HeaderHabits />
 

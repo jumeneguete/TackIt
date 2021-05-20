@@ -1,13 +1,17 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import UserContext from "../contexts/UserContext";
 import Footer from "../Footer";
 import Header from "../Header";
 import HabitContainer from "./HabitContainer";
 import HeaderToday from "./HeaderToday";
 
 export default function Today() {
+    const {user} = useContext(UserContext);
+
     return (
         <>
-        <Header />
+        <Header image={user.image}/>
             <Container>
                 <HeaderToday />
                 <MarginTop>

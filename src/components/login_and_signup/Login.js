@@ -1,17 +1,19 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import Input from "./Input"
 import LogoImg from "./LogoImg";
 import ThreeDots from "../ThreeDots";
+import UserContext from "../contexts/UserContext";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+    const {setUser} = useContext(UserContext);
 
     function enter (e){
         e.preventDefault();
@@ -21,7 +23,7 @@ export default function Login() {
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
         setLoading(true);
         request.then((response) => {
-            console.log(response);
+            setUser(response.data);
             history.push("/today");
         });
         request.catch(() => {
