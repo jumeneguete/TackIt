@@ -1,10 +1,14 @@
 import styled from "styled-components";
+import HabitContainer from "./HabitContainer";
 import HeaderToday from "./HeaderToday";
 
 export default function Today() {
     return (
         <Container>
-            <HeaderToday />            
+            <HeaderToday /> 
+            <MarginTop>
+                <HabitContainer />
+            </MarginTop>           
         </Container>
     );
 }
