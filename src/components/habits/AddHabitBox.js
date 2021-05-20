@@ -1,22 +1,69 @@
+import { useState, useContext } from "react";
 import styled from "styled-components";
+import axios from "axios";
+import UserContext from "../contexts/UserContext";
 
-export default function AddHabitBox({hide}) {
+export default function AddHabitBox({ hide }) {
+    const {user} = useContext(UserContext);
+    const [name, setName] = useState("");
+    const [days, setDays] = useState([]);
+    const daysOfTheWeek = [
+        { day: 1, name: "D", available: true },
+        { day: 2, name: "S", available: true },
+        { day: 3, name: "T", available: true },
+        { day: 4, name: "Q", available: true },
+        { day: 5, name: "Q", available: true },
+        { day: 6, name: "S", available: true },
+        { day: 7, name: "S", available: true }
+    ]
+
+    console.log(user)
+
+    function selectDay(day) {
+        const same = days.filter(n => n === day);
+
+        if (same.length > 0) {
+            const array = days.filter(d => d !== day);
+            setDays(array);
+            return;
+        }
+
+        const newArray = [...days, day];
+        daysOfTheWeek.forEach(dia => dia.available === day ? dia.available = false : dia.available = false)
+        setDays(newArray);
+    }
+
+    function addHabit (){
+        const body = {name, days};
+        const config = {
+            headers: {
+              Authorization: `Bearer ${user.token}`
+            }
+          };
+
+        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+
+        request.then((response) => console.log(response));
+        request.catch((error) => console.log(error));
+    }
+
+    console.log(days)
+    console.log(daysOfTheWeek)
+
     return (
         <Container hide={hide}>
-            <InputStyle type="text" placeholder="nome do hábito" />
-            <Days>
-                <button>D</button>
-                <button>S</button>
-                <button>T</button>
-                <button>Q</button>
-                <button>Q</button>
-                <button>S</button>
-                <button>S</button>
-            </Days>
-            <Buttons>
-                <Button>Cancelar</Button>
-                <Button bgColor >Salvar </Button>
-            </Buttons>
+            <form onSubmit={addHabit}>
+                <InputStyle type="text" placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
+                <Days>
+                    {daysOfTheWeek.map(d => (
+                        <Day key={d.day} onClick={() => selectDay(d.day)} className={`${!d.available ? "unavailable" : ""} `}>{d.name}</Day>
+                    ))}
+                </Days>
+                <Buttons>
+                    <Button>Cancelar</Button>
+                    <Button type="submit" bgColor >Salvar </Button>
+                </Buttons>
+            </form>
         </Container>
 
     );
@@ -33,7 +80,11 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    display: ${props => props.hide ? "none" : "block"}
+    display: ${props => props.hide ? "none" : "block"};
+
+    form {
+
+    }
 `;
 
 const InputStyle = styled.input`
@@ -58,15 +109,23 @@ const InputStyle = styled.input`
 const Days = styled.div`
     width: 90%;
     margin: 10px auto;
+    display: flex;
+`;
 
-    button {
-        font-size: 20px;
-        color: #D5D5D5;
-        background-color: #fff;
-        margin: -7px 10px 15px 0;
-        padding: 5px 10px;
-        border: 1px solid #D5D5D5;
-        border-radius: 5px;
+const Day = styled.div`
+    width: 35px;
+    text-align: center;
+    font-size: 20px;
+    color: #D5D5D5;
+    background-color: #fff;
+    margin: -7px 10px 15px 0;
+    padding: 5px 10px;
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+
+    .unvailable {
+        background-color: red;
+        color: #fff;
     }
 `;
 
@@ -86,6 +145,6 @@ const Button = styled.div`
     margin-top: 20px;
     border: none;
     border-radius: 5px;
-    color: ${props => props.bgColor? "#fff" : "#55B3F7"};
+    color: ${props => props.bgColor ? "#fff" : "#55B3F7"};
     background-color: ${props => props.bgColor ? "#55B3F7" : "#fff"};
 `;
