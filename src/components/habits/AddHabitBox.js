@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function AddHabitBox() {
+export default function AddHabitBox({hide}) {
     return (
-        <Container>
+        <Container hide={hide}>
             <InputStyle type="text" placeholder="nome do hábito" />
             <Days>
                 <button>D</button>
@@ -33,6 +33,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    display: ${props => props.hide ? "none" : "block"}
 `;
 
 const InputStyle = styled.input`

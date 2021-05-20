@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-export default function HeaderHabits() {
+export default function HeaderHabits({setHideAdd, setHideMessage}) {
     return (
         <HeaderStyles>
             <h1>Meus hábitos</h1>
-            <button> + </button>
+            <button onClick={() => {
+                setHideMessage(true); 
+                setHideAdd(false);
+                }}> + </button>
         </HeaderStyles>
 
     );

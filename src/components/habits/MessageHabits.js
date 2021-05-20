@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export default function MessageHabits() {
+export default function MessageHabits({hide}) {
     return (
 
-        <Span><p>Você não tem nenhum hábito cadastrado ainda.
+        <Span hide={hide}><p>Você não tem nenhum hábito cadastrado ainda.
         Adicione um hábito para começar a trackear!</p></Span>
 
 
@@ -13,6 +13,7 @@ export default function MessageHabits() {
 const Span = styled.span`
     font-size: 18px;
     color: #666666;
+    display: ${props => props.hide ? "none" : "block" };
     
     p{
         padding: 0 20px;
