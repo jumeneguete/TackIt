@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
-export default function Button({children}) {
+export default function Button({children, type}) {
     return (
-        <ButtonStyle>{children}</ButtonStyle>
+        <ButtonStyle type={type}>{children}</ButtonStyle>
     );
 }
 
