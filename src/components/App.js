@@ -5,7 +5,6 @@ import SignUp from "./login_and_signup/SingUp";
 import Habits from "./habits/Habits";
 import Today from "./today/Today";
 import Header from "./Header";
-import Footer from "./Footer";
 
 
 export default function App() {
@@ -29,9 +28,7 @@ export default function App() {
                         <Today />
                     </Route>
                 </Switch>
-                <Footer />
             </BrowserRouter>
-
         </>
     );
 }

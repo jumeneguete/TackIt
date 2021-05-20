@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Footer from "../Footer";
 import AddHabitBox from "./AddHabitBox";
 import HabitBox from "./HabitBox";
 import HeaderHabits from "./HeaderHabits";
@@ -6,21 +7,24 @@ import MessageHabits from "./MessageHabits";
 
 export default function Habits() {
     return (
-        <Container>
-            <HeaderHabits />
+        <>
+            <Container>
+                <HeaderHabits />
 
-            <MarginTop>
-                <AddHabitBox />
-            </MarginTop>
+                <MarginTop>
+                    <AddHabitBox />
+                </MarginTop>
 
-            <MarginTop>
-                <HabitBox />
-            </MarginTop>
+                <MarginTop>
+                    <HabitBox />
+                </MarginTop>
 
-            <MarginTop>
-                <MessageHabits />
-            </MarginTop>
-        </Container>
+                <MarginTop>
+                    <MessageHabits />
+                </MarginTop>
+            </Container>
+            <Footer />
+        </>
     );
 }
 
