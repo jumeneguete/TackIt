@@ -6,6 +6,7 @@ import Habits from "./habits/Habits";
 import Today from "./today/Today";
 import { useState } from "react";
 import UserContext from "./contexts/UserContext";
+import History from "./history/History";
 
 export default function App() {
     const [user, setUser] = useState("");
@@ -27,6 +28,9 @@ export default function App() {
                         </Route>
                         <Route path="/today" exact>
                             <Today />
+                        </Route>
+                        <Route path="/history" exact>
+                            <History />
                         </Route>
                     </UserContext.Provider>
                 </Switch>
