@@ -1,13 +1,17 @@
 import styled from "styled-components";
 import Footer from "../Footer";
+import Header from "../Header";
 import AddHabitBox from "./AddHabitBox";
 import HabitBox from "./HabitBox";
 import HeaderHabits from "./HeaderHabits";
 import MessageHabits from "./MessageHabits";
 
+
+
 export default function Habits() {
     return (
         <>
+        <Header />
             <Container>
                 <HeaderHabits />
 

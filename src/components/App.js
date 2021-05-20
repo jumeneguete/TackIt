@@ -4,8 +4,6 @@ import Login from "./login_and_signup/Login";
 import SignUp from "./login_and_signup/SingUp";
 import Habits from "./habits/Habits";
 import Today from "./today/Today";
-import Header from "./Header";
-
 
 export default function App() {
 
@@ -13,7 +11,6 @@ export default function App() {
         <>
             <GlobalStyle />
             <BrowserRouter>
-                <Header />
                 <Switch>
                     <Route path="/" exact>
                         <Login />

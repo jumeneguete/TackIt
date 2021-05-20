@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import Footer from "../Footer";
+import Header from "../Header";
 import HabitContainer from "./HabitContainer";
 import HeaderToday from "./HeaderToday";
 
 export default function Today() {
     return (
         <>
+        <Header />
             <Container>
                 <HeaderToday />
                 <MarginTop>
