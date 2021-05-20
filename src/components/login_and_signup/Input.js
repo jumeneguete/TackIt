@@ -14,9 +14,13 @@ const InputStyle = styled.input`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
 
-&::placeholder{
-    font-size: 18px;
-    color: #D5D5D5;
-    padding-left: 10px;
-}
+        &::placeholder{
+            font-size: 18px;
+            color: #D5D5D5;
+            padding-left: 10px;
+        }
+        &:focus{
+            box-shadow: 0 0 0 0;
+            outline: 0;
+        }
 `;
