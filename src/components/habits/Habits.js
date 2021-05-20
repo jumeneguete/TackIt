@@ -9,18 +9,19 @@ import MessageHabits from "./MessageHabits";
 export default function Habits() {
     return (
         <Container>
-            <Header />
             <HeaderHabits />
+
             <MarginTop>
                 <AddHabitBox />
             </MarginTop>
+
             <MarginTop>
                 <HabitBox />
             </MarginTop>
+
             <MarginTop>
                 <MessageHabits />
             </MarginTop>
-            <Footer />
         </Container>
     );
 }
