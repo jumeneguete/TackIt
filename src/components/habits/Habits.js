@@ -18,7 +18,7 @@ export default function Habits() {
         <>
          <Header image={user.image}/>
             <Container>
-                <HeaderHabits setHideMessage={setHideMessage} setHideAdd={setHideAdd}  />
+                <HeaderHabits setHideMessage={setHideMessage} setHideAdd={setHideAdd} setHideBox={setHideBox} />
 
                 <MarginTop>
                     <AddHabitBox hide={hideAdd} />

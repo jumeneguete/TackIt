@@ -8,13 +8,13 @@ export default function AddHabitBox({ hide }) {
     const [name, setName] = useState("");
     const [days, setDays] = useState([]);
     const [daysOfTheWeek, setDaysOfTheWeek] = useState([
-        { day: 1, name: "D", available: true },
-        { day: 2, name: "S", available: true },
-        { day: 3, name: "T", available: true },
+        { day: 7, name: "D", available: true },
+        { day: 1, name: "S", available: true },
+        { day: 2, name: "T", available: true },
+        { day: 3, name: "Q", available: true },
         { day: 4, name: "Q", available: true },
-        { day: 5, name: "Q", available: true },
-        { day: 6, name: "S", available: true },
-        { day: 7, name: "S", available: true }
+        { day: 5, name: "S", available: true },
+        { day: 6, name: "S", available: true }
     ])
     function selectDay(day) {
         const same = days.filter(n => n === day);
@@ -31,13 +31,18 @@ export default function AddHabitBox({ hide }) {
         setDays(newArray);
     }
 
-    function addHabit (){
+    function addHabit (e){
+        e.prevnetDefault();
+        console.log("entrei")
+        
         const body = {name, days};
+        console.log(body)
         const config = {
             headers: {
               Authorization: `Bearer ${user.token}`
             }
           };
+        console.log(config)
 
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
 
@@ -45,8 +50,7 @@ export default function AddHabitBox({ hide }) {
         request.catch((error) => console.log(error));
     }
 
-console.log(days)
-console.log(daysOfTheWeek)
+console.log(user.token)
     
 
     return (
@@ -60,7 +64,7 @@ console.log(daysOfTheWeek)
                     ))}
                 </Days>
                 <Buttons>
-                    <Button>Cancelar</Button>
+                    <Button type="button">Cancelar</Button>
                     <Button type="submit" bgColor >Salvar </Button>
                 </Buttons>
             </form>
