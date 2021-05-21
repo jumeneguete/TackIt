@@ -3,8 +3,9 @@ import { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
-export default function HabitBox({ hide, habits, setHabits }) {
+export default function HabitBox({ hide, habits, setHabits, setHideMessage }) {
     const { user } = useContext(UserContext);
+
 
     useEffect(() => {
         const config = {
@@ -21,7 +22,6 @@ export default function HabitBox({ hide, habits, setHabits }) {
             console.log(error)
         });
     }, [])
-    console.log("entrei na pagina HabitBox")
 
     function deleteHabit (id, name){
         const confirmation = window.confirm(`Você realmente deseja apagar "${name}"?`);
@@ -35,6 +35,7 @@ export default function HabitBox({ hide, habits, setHabits }) {
 
             const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
             promise.then(()=> {
+                
                 const config = {
                     headers: {
                         Authorization: `Bearer ${user.token}`
@@ -43,11 +44,16 @@ export default function HabitBox({ hide, habits, setHabits }) {
         
                 const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
                 request.then((response) => {
+                    if (habits.length === 1){
+                        setHideMessage(false)
+                    }
                     setHabits(response.data);
+                    
                 });
                 request.catch((error) => {
                     console.log(error)
                 });
+
             })
 
             promise.catch((error)=> {
