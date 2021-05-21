@@ -5,7 +5,6 @@ import UserContext from "../contexts/UserContext";
 
 export default function HabitBox({ hide, habits, setHabits }) {
     const { user } = useContext(UserContext);
-    console.log(user)
 
     useEffect(() => {
         const config = {
@@ -22,7 +21,40 @@ export default function HabitBox({ hide, habits, setHabits }) {
             console.log(error)
         });
     }, [])
-    console.log(habits)
+    console.log("entrei na pagina HabitBox")
+
+    function deleteHabit (id, name){
+        const confirmation = window.confirm(`Você realmente deseja apagar "${name}"?`);
+        
+        if (confirmation === true){
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                }
+            };
+
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
+            promise.then(()=> {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${user.token}`
+                    }
+                };
+        
+                const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+                request.then((response) => {
+                    setHabits(response.data);
+                });
+                request.catch((error) => {
+                    console.log(error)
+                });
+            })
+
+            promise.catch((error)=> {
+                console.log(error)
+            })         
+        }
+    }
 
     return (
         <>
@@ -32,8 +64,8 @@ export default function HabitBox({ hide, habits, setHabits }) {
                     <Container hide={hide}>
                         <div>
                             <MyHabit>
-                                <p>{h.name}</p>
-                                <span><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg></span>
+                                <p key={h.id}>{h.name}</p>
+                                <span onClick={()=> deleteHabit(h.id, h.name)}><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash" class="svg-inline--fa fa-trash fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"></path></svg></span>
                             </MyHabit>
                             <Days>
                                 <button className={`${h.days.includes(7) ? "selected" : ""}`}>D</button>

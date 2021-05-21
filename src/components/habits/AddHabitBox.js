@@ -4,8 +4,8 @@ import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import ThreeDotsHabits from "../ThreeDotsHabits";
 
-export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
-    const {user} = useContext(UserContext);
+export default function AddHabitBox({ hide, setHideAdd, setHideBox, habits, setHabits }) {
+    const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
     const [days, setDays] = useState([]);
@@ -19,32 +19,36 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
         { day: 6, name: "S", available: true }
     ])
     function selectDay(day) {
-        const same = days.filter(n => n === day);
+        if (days.length > 0) {
+            const same = days.filter(n => n === day);
 
-        if (same.length > 0) {
-            const array = days.filter(d => d !== day);
-            daysOfTheWeek.forEach(d => d.day == day ? d.available = true : "") 
-            setDays(array);
-            return;
+            if (same.length > 0) {
+                const array = days.filter(d => d !== day);
+                daysOfTheWeek.forEach(d => d.day == day ? d.available = true : "")
+                setDays(array);
+                return;
+            }
         }
 
         const newArray = [...days, day];
-        daysOfTheWeek.forEach(d => d.day === day ? d.available = false : "") 
+        daysOfTheWeek.forEach(d => d.day === day ? d.available = false : "")
         setDays(newArray);
     }
 
-    function addHabit (){        
-        const body = {name, days};
+    function addHabit(e) {
+        e.preventDefault();
+
+        const body = { name, days };
         const config = {
             headers: {
-              Authorization: `Bearer ${user.token}`
+                Authorization: `Bearer ${user.token}`
             }
-          };
+        };
 
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
         setLoading(true);
-        request.then(() => {
-            console.log("oi")
+        request.then((response) => {
+            setHabits([...habits, response.data]);
             setHideAdd(true);
             setHideBox(false);
             setLoading(false);
@@ -55,28 +59,29 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
         });
 
         setName("");
-        daysOfTheWeek.forEach(d => d.available= true);
+        daysOfTheWeek.forEach(d => d.available = true);
+        setDays([]);
     }
 
-    function cancel(){
+    function cancel() {
         setHideAdd(true);
         setHideBox(false);
     }
 
     return (
         <Container hide={hide}>
-            <div>
-                <InputStyle type="text" disabled={loading ? true : false}  placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
+            <form onSubmit={addHabit}>
+                <InputStyle type="text" disabled={loading ? true : false} placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
                 <Days>
                     {daysOfTheWeek.map(d => (
                         <Day key={d.day} onClick={() => selectDay(d.day)} className={`${!d.available ? "unavailable" : ""} ${loading ? "disabled" : ""}`}>{d.name}</Day>
                     ))}
                 </Days>
                 <Buttons>
-                    <Button disabled={loading ? true : false}  onClick ={cancel} type="button">Cancelar</Button>
-                    <Button disabled={loading ? true : false}  onClick ={addHabit} bgColor >{loading ? <ThreeDotsHabits /> : "Salvar"} </Button>
+                    <Button disabled={loading ? true : false} onClick={cancel} type="button">Cancelar</Button>
+                    <Button disabled={loading ? true : false} type="submit" bgColor >{loading ? <ThreeDotsHabits /> : "Salvar"} </Button>
                 </Buttons>
-            </div>
+            </form>
         </Container>
 
     );
@@ -95,11 +100,11 @@ const Container = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     display: ${props => props.hide ? "none" : "block"};
 
-    & > div {
+    & > form {
         display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
 
     }
 `;
@@ -158,7 +163,7 @@ width: 90%;
     background-color: ${props => props.bgColor ? "#55B3F7" : "#fff"};
 `;
 
-const Button = styled.div`
+const Button = styled.button`
     color: #fff;
     font-size:20px;
     font-weight:bold;

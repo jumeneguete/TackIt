@@ -22,7 +22,7 @@ export default function Habits() {
                 <HeaderHabits setHideMessage={setHideMessage} setHideAdd={setHideAdd} setHideBox={setHideBox} />
 
                 <MarginTop>
-                    <AddHabitBox hide={hideAdd} setHideAdd={setHideAdd} setHideBox={setHideBox} />
+                    <AddHabitBox hide={hideAdd} setHideAdd={setHideAdd} setHideBox={setHideBox}  habits={habits} setHabits={setHabits}/>
                 </MarginTop>
 
                 <MarginTop>
