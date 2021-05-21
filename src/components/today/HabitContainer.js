@@ -20,7 +20,7 @@ export default function HabitContainer({name, done, id, seq, max, setTodayHabits
             request.then(()=> {
                 const check = todayHabits.map(t => {
                     if(t.id === id){
-                        t.done = true
+                        t.done = true;
                     }
                     return t;  
                 })

@@ -25,11 +25,14 @@ export default function Today() {
         request.catch((error) => {
             console.log(error)
         });
-    }, [])
+    }, []);
+
+    const concludedToday = todayHabits.filter(t => t.done);
+    const percentage = parseInt((concludedToday.length / todayHabits.length) * 100)
 
     return (
         <>
-        <Header image={user.image}/>
+        <Header image={user.image} />
             <Container>
                 <HeaderToday todayHabits={todayHabits} />
                 <MarginTop>
@@ -40,7 +43,7 @@ export default function Today() {
                     }
                 </MarginTop>
             </Container>
-            <Footer />
+            <Footer percentage ={percentage} />
         </>
     );
 }
