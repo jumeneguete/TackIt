@@ -7,7 +7,7 @@ export default function AddHabitBox({ hide }) {
     const {user} = useContext(UserContext);
     const [name, setName] = useState("");
     const [days, setDays] = useState([]);
-    const daysOfTheWeek = [
+    const [daysOfTheWeek, setDaysOfTheWeek] = useState([
         { day: 1, name: "D", available: true },
         { day: 2, name: "S", available: true },
         { day: 3, name: "T", available: true },
@@ -15,26 +15,22 @@ export default function AddHabitBox({ hide }) {
         { day: 5, name: "Q", available: true },
         { day: 6, name: "S", available: true },
         { day: 7, name: "S", available: true }
-    ]
-
+    ])
     function selectDay(day) {
         const same = days.filter(n => n === day);
 
         if (same.length > 0) {
             const array = days.filter(d => d !== day);
+            daysOfTheWeek.forEach(d => d.day == day ? d.available = true : "") 
             setDays(array);
             return;
         }
 
         const newArray = [...days, day];
-        //daysOfTheWeek.forEach(dia => dia.available === day ? dia.available = false : dia.available = false) 
-        //Esse filter não funciona por nada!!
+        daysOfTheWeek.forEach(d => d.day === day ? d.available = false : "") 
         setDays(newArray);
     }
 
-    console.log(user)
-    //essa função não está enviando.. nem o botão faz nada, mesmo com o type="submit"
-    //esse user não está retornando nada :(
     function addHabit (){
         const body = {name, days};
         const config = {
@@ -49,9 +45,8 @@ export default function AddHabitBox({ hide }) {
         request.catch((error) => console.log(error));
     }
 
-    console.log(days)
-    console.log(daysOfTheWeek)
-
+console.log(days)
+console.log(daysOfTheWeek)
     
 
     return (
@@ -128,8 +123,8 @@ const Day = styled.div`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
 
-    .unvailable {
-        background-color: red;
+    &.unavailable {
+        background-color: #D5D5D5;
         color: #fff;
     }
 `;
