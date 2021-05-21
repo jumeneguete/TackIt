@@ -43,7 +43,6 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
 
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
         setLoading(true);
-        console.log(loading)
         request.then(() => {
             console.log("oi")
             setHideAdd(true);
@@ -59,6 +58,11 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
         daysOfTheWeek.forEach(d => d.available= true);
     }
 
+    function cancel(){
+        setHideAdd(true);
+        setHideBox(false);
+    }
+
     return (
         <Container hide={hide}>
             <div>
@@ -69,7 +73,7 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
                     ))}
                 </Days>
                 <Buttons>
-                    <Button disabled={loading ? true : false}  type="button">Cancelar</Button>
+                    <Button disabled={loading ? true : false}  onClick ={cancel} type="button">Cancelar</Button>
                     <Button disabled={loading ? true : false}  onClick ={addHabit} bgColor >{loading ? <ThreeDotsHabits /> : "Salvar"} </Button>
                 </Buttons>
             </div>
