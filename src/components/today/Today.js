@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 import Footer from "../Footer";
@@ -8,14 +9,35 @@ import HeaderToday from "./HeaderToday";
 
 export default function Today() {
     const {user} = useContext(UserContext);
+    const [ todayHabits, setTodayHabits ] = useState([]);
+
+    useEffect(()=>{
+        const config = {
+            headers: {
+                Authorization: `Bearer ${user.token}`
+            }
+        };
+
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+        request.then((response) => {
+            setTodayHabits(response.data);
+        });
+        request.catch((error) => {
+            console.log(error)
+        });
+    }, [])
 
     return (
         <>
         <Header image={user.image}/>
             <Container>
-                <HeaderToday />
+                <HeaderToday todayHabits={todayHabits} />
                 <MarginTop>
-                    <HabitContainer />
+                    {todayHabits === undefined ? "" :
+                    todayHabits.map(t =>(
+                        <HabitContainer id={t.id} todayHabits={todayHabits} setTodayHabits= {setTodayHabits} name={t.name} done ={t.done} seq = {t.currentSequence} max={t.highestSequence} />      
+                    ))         
+                    }
                 </MarginTop>
             </Container>
             <Footer />

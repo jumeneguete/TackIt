@@ -38,6 +38,11 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox, habits, setH
     function addHabit(e) {
         e.preventDefault();
 
+        if(days.length === 0){
+            alert("Complete os campos corretamente!");
+            return;
+        }
+
         const body = { name, days };
         const config = {
             headers: {

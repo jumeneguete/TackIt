@@ -14,6 +14,7 @@ export default function Habits() {
     const [hideBox, setHideBox] = useState(true);
     const [hideMessage, setHideMessage] = useState(false);
     const [habits, setHabits] = useState(null);
+    
 
     return (
         <>
@@ -26,7 +27,7 @@ export default function Habits() {
                 </MarginTop>
 
                 <MarginTop>
-                    <HabitBox hide={hideBox} habits={habits} setHabits={setHabits} setHideMessage={setHideMessage}/>
+                    <HabitBox hide={hideBox} habits={habits} setHabits={setHabits} setHideMessage={setHideMessage} setHideBox={setHideBox}/>
                 </MarginTop>
 
                 <MarginTop>

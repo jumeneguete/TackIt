@@ -6,12 +6,13 @@ import { Link, useHistory } from "react-router-dom";
 export default function Footer({habits, setHideMessage, setHideBox}) {
     const history = useHistory();
 
+    console.log(habits)
+
     function habitsPage(){
-        if(habits.lenght === 0){
-            setHideMessage(false);
-            setHideBox(true);
+        if(!habits){    
             history.push("/habits")
-        } else {
+        } else if (habits.length > 0) {
+            console.log("else if")
             setHideMessage(true);
             setHideBox(false);
             history.push("/habits")

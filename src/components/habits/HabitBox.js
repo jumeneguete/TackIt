@@ -3,9 +3,8 @@ import { useEffect, useContext, useState } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
-export default function HabitBox({ hide, habits, setHabits, setHideMessage }) {
+export default function HabitBox({ hide, habits, setHabits, setHideMessage, setHideBox }) {
     const { user } = useContext(UserContext);
-
 
     useEffect(() => {
         const config = {
@@ -17,6 +16,8 @@ export default function HabitBox({ hide, habits, setHabits, setHideMessage }) {
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
         request.then((response) => {
             setHabits(response.data);
+            setHideMessage(true);
+            setHideBox(false);
         });
         request.catch((error) => {
             console.log(error)
@@ -67,7 +68,7 @@ export default function HabitBox({ hide, habits, setHabits, setHideMessage }) {
             {habits === null ? "" :
 
                 habits.map(h => (
-                    <Container hide={hide}>
+                    <Container key={h.id} hide={hide}>
                         <div>
                             <MyHabit>
                                 <p key={h.id}>{h.name}</p>

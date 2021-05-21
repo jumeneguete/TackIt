@@ -1,10 +1,16 @@
 import styled from "styled-components";
+import dayjs from 'dayjs';
+import "dayjs/locale/pt-br";
 
-export default function HeaderToday() {
+export default function HeaderToday({todayHabits}) {
+
+    const concludedToday = todayHabits.filter(t => t.done);
+   
+  
     return (
         <HeaderStyles>
-            <h1>Segunda, 17/05</h1>
-            <p>Nenhum hábito concluído ainda</p>
+            <h1>{dayjs().locale("pt-br").format("dddd, "+"DD/MM/YYYY")}</h1>
+            <p>{concludedToday.length >0 ? "x% dos hábitos concluídos" : "Nenhum hábito concluído ainda"}</p>
         </HeaderStyles>
 
     );
