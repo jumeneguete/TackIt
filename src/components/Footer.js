@@ -1,14 +1,27 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-export default function Footer() {
+export default function Footer({habits, setHideMessage, setHideBox}) {
+    const history = useHistory();
+
+    function habitsPage(){
+        if(habits.lenght === 0){
+            setHideMessage(false);
+            setHideBox(true);
+            history.push("/habits")
+        } else {
+            setHideMessage(true);
+            setHideBox(false);
+            history.push("/habits")
+        }
+    }
 
     const percentage = 74;
     return (
         <FooterStyle>
-            <Link to={"/habits"}><span>Hábitos</span></Link>
+            <Link onClick={habitsPage}><span>Hábitos</span></Link>
             <Link to={"/today"}>
             <div label="Background">
                 <CircularProgressbar
