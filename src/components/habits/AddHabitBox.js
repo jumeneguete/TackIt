@@ -2,9 +2,11 @@ import { useState, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
+import ThreeDotsHabits from "../ThreeDotsHabits";
 
-export default function AddHabitBox({ hide }) {
+export default function AddHabitBox({ hide, setHideAdd, setHideBox }) {
     const {user} = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
     const [days, setDays] = useState([]);
     const [daysOfTheWeek, setDaysOfTheWeek] = useState([
@@ -31,43 +33,46 @@ export default function AddHabitBox({ hide }) {
         setDays(newArray);
     }
 
-    function addHabit (e){
-        e.prevnetDefault();
-        console.log("entrei")
-        
+    function addHabit (){        
         const body = {name, days};
-        console.log(body)
         const config = {
             headers: {
               Authorization: `Bearer ${user.token}`
             }
           };
-        console.log(config)
 
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+        setLoading(true);
+        console.log(loading)
+        request.then(() => {
+            console.log("oi")
+            setHideAdd(true);
+            setHideBox(false);
+            setLoading(false);
+        });
+        request.catch(() => {
+            alert("Algo deu errado :(!");
+            setLoading(false);
+        });
 
-        request.then((response) => console.log(response));
-        request.catch((error) => console.log(error));
+        setName("");
+        daysOfTheWeek.forEach(d => d.available= true);
     }
-
-console.log(user.token)
-    
 
     return (
         <Container hide={hide}>
-            <form onSubmit={addHabit}>
-                <InputStyle type="text" placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
+            <div>
+                <InputStyle type="text" disabled={loading ? true : false}  placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
                 <Days>
-                    {/* Essa classe não funciona, mesmo eu adicionando ela direto, sem lógica por tras */}
                     {daysOfTheWeek.map(d => (
-                        <Day key={d.day} onClick={() => selectDay(d.day)} className={`${!d.available ? "unavailable" : ""} `}>{d.name}</Day>
+                        <Day key={d.day} onClick={() => selectDay(d.day)} className={`${!d.available ? "unavailable" : ""} ${loading ? "disabled" : ""}`}>{d.name}</Day>
                     ))}
                 </Days>
                 <Buttons>
-                    <Button type="button">Cancelar</Button>
-                    <Button type="submit" bgColor >Salvar </Button>
+                    <Button disabled={loading ? true : false}  type="button">Cancelar</Button>
+                    <Button disabled={loading ? true : false}  onClick ={addHabit} bgColor >{loading ? <ThreeDotsHabits /> : "Salvar"} </Button>
                 </Buttons>
-            </form>
+            </div>
         </Container>
 
     );
@@ -86,7 +91,11 @@ const Container = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     display: ${props => props.hide ? "none" : "block"};
 
-    form {
+    & > div {
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     }
 `;
@@ -131,6 +140,11 @@ const Day = styled.div`
         background-color: #D5D5D5;
         color: #fff;
     }
+
+    &.disabled {
+        cursor: not-allowed;
+    }
+
 `;
 
 const Buttons = styled.div`
