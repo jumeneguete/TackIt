@@ -1,40 +1,28 @@
 import styled from "styled-components";
-import Footer from "../Footer";
-import Header from "../Header";
 import AddHabitBox from "./AddHabitBox";
 import HabitBox from "./HabitBox";
 import HeaderHabits from "./HeaderHabits";
 import MessageHabits from "./MessageHabits";
-import UserContext from "../contexts/UserContext";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 export default function Habits() {
-    const {user} = useContext(UserContext);
-    const [hideAdd, setHideAdd] = useState(true);
-    const [hideBox, setHideBox] = useState(true);
+    const [habits, setHabits] = useState([]);
     const [hideMessage, setHideMessage] = useState(false);
-    const [habits, setHabits] = useState(null);
-    
+    const [showAddHabitBox, setShowAddHabitBox] = useState(false)
+
 
     return (
         <>
-         <Header image={user.image}/>
             <Container>
-                <HeaderHabits setHideMessage={setHideMessage} setHideAdd={setHideAdd} setHideBox={setHideBox} />
+                <HeaderHabits setShowAddHabitBox={setShowAddHabitBox} />
 
-                <MarginTop>
-                    <AddHabitBox hide={hideAdd} setHideAdd={setHideAdd} setHideBox={setHideBox}  habits={habits} setHabits={setHabits}/>
-                </MarginTop>
+                <MarginTop />
+                    {showAddHabitBox && <AddHabitBox display={showAddHabitBox} setShowAddHabitBox={setShowAddHabitBox}/>}
 
-                <MarginTop>
-                    <HabitBox hide={hideBox} habits={habits} setHabits={setHabits} setHideMessage={setHideMessage} setHideBox={setHideBox}/>
-                </MarginTop>
+                    {!showAddHabitBox && <HabitBox habits={habits} display={showAddHabitBox} setHabits={setHabits} setHideMessage={setHideMessage} /> }
 
-                <MarginTop>
                     <MessageHabits hide={hideMessage} />
-                </MarginTop>
             </Container>
-            <Footer habits={habits} setHideMessage={setHideMessage} setHideBox={setHideBox} />
         </>
     );
 }

@@ -15,15 +15,18 @@ export default function Login() {
     const history = useHistory();
     const {setUser} = useContext(UserContext);
 
+    
+
     function enter (e){
         e.preventDefault();
-
+        
         const body = {email, password};
-
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", body);
         setLoading(true);
         request.then((response) => {
             setUser(response.data);
+            const loginSaved = JSON.stringify(response.data);
+            localStorage.setItem("lastLogin", loginSaved);
             history.push("/today");
         });
         request.catch(() => {

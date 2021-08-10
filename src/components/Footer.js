@@ -3,31 +3,20 @@ import { CircularProgressbar, buildStyles} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link, useHistory } from "react-router-dom";
 
-export default function Footer({habits, setHideMessage, setHideBox, percentage}) {
+export default function Footer() {
     const history = useHistory();
 
-    console.log(habits)
+    //const concludedToday = todayHabits.filter(t => t.done);
+    //const percentage = parseInt((concludedToday.length / todayHabits.length) * 100)
 
-    function habitsPage(){
-        if(!habits){    
-            history.push("/habits")
-        } else if (habits.length > 0) {
-            console.log("else if")
-            setHideMessage(true);
-            setHideBox(false);
-            history.push("/habits")
-        }
-    }
-
-    const percent = {percentage};
     return (
         <FooterStyle>
-            <Link onClick={habitsPage}><span>Hábitos</span></Link>
+            <Link onClick={() => history.push("/habits")}><span>Hábitos</span></Link>
             <Link to={"/today"}>
             <div label="Background">
                 <CircularProgressbar
-                    value={percentage}
-                    text={`${percentage}%`}
+                    // value={percentage}
+                    // text={`${percentage}%`}
                     background
                     backgroundPadding={6}
                     styles={buildStyles({

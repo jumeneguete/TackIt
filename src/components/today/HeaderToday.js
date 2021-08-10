@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import dayjs from 'dayjs';
 import "dayjs/locale/pt-br";
+import { useContext } from "react";
+import TodayContext from "../contexts/TodayContext";
 
-export default function HeaderToday({todayHabits }) {   
+export default function HeaderToday() {   
+    const {todayHabits} =useContext(TodayContext)
     const concludedToday = todayHabits.filter(t => t.done);
     const percentage = parseInt((concludedToday.length / todayHabits.length) * 100)
     

@@ -4,7 +4,7 @@ import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import ThreeDotsHabits from "../ThreeDotsHabits";
 
-export default function AddHabitBox({ hide, setHideAdd, setHideBox, habits, setHabits }) {
+export default function AddHabitBox({ display, setShowAddHabitBox, habits, setHabits }) {
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
@@ -52,10 +52,8 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox, habits, setH
 
         const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
         setLoading(true);
-        request.then((response) => {
-            setHabits([...habits, response.data]);
-            setHideAdd(true);
-            setHideBox(false);
+        request.then(() => {
+            setShowAddHabitBox(false);
             setLoading(false);
         });
         request.catch(() => {
@@ -69,12 +67,11 @@ export default function AddHabitBox({ hide, setHideAdd, setHideBox, habits, setH
     }
 
     function cancel() {
-        setHideAdd(true);
-        setHideBox(false);
+        setShowAddHabitBox(false);
     }
 
     return (
-        <Container hide={hide}>
+        <Container display={display}>
             <form onSubmit={addHabit}>
                 <InputStyle type="text" disabled={loading ? true : false} placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
                 <Days>
@@ -103,7 +100,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    display: ${props => props.hide ? "none" : "block"};
+    display: ${props => props.display ? "block" : "none"};
 
     & > form {
         display: flex;

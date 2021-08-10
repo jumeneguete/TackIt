@@ -1,9 +1,9 @@
 import axios from "axios";
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import styled from "styled-components";
 import UserContext from "../contexts/UserContext";
 
-export default function HabitBox({ hide, habits, setHabits, setHideMessage, setHideBox }) {
+export default function HabitBox({ habits, display, setHabits, setHideMessage }) {
     const { user } = useContext(UserContext);
 
     useEffect(() => {
@@ -16,13 +16,12 @@ export default function HabitBox({ hide, habits, setHabits, setHideMessage, setH
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
         request.then((response) => {
             setHabits(response.data);
-            setHideMessage(true);
-            setHideBox(false);
+            response.data.length === 0 ? setHideMessage(false) : setHideMessage(true);
         });
         request.catch((error) => {
             console.log(error)
         });
-    }, [])
+    }, [habits])
 
     function deleteHabit (id, name){
         const confirmation = window.confirm(`Você realmente deseja apagar "${name}"?`);
@@ -34,31 +33,9 @@ export default function HabitBox({ hide, habits, setHabits, setHideMessage, setH
                 }
             };
 
-            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config)
-            promise.then(()=> {
-                
-                const config = {
-                    headers: {
-                        Authorization: `Bearer ${user.token}`
-                    }
-                };
-        
-                const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
-                request.then((response) => {
-                    if (habits.length === 1){
-                        setHideMessage(false)
-                    }
-                    setHabits(response.data);
-                    
-                });
-                request.catch((error) => {
-                    console.log(error)
-                });
-
-            })
-
+            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
             promise.catch((error)=> {
-                console.log(error)
+                console.log(error);
             })         
         }
     }
@@ -68,7 +45,7 @@ export default function HabitBox({ hide, habits, setHabits, setHideMessage, setH
             {habits === null ? "" :
 
                 habits.map(h => (
-                    <Container key={h.id} hide={hide}>
+                    <Container key={h.id} display={display}>
                         <div>
                             <MyHabit>
                                 <p key={h.id}>{h.name}</p>
@@ -102,7 +79,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    display: ${props => props.hide ? "none" : "block"};
+    display: ${props => props.display ? "none" : "block"};
 
     & > div {
     display: flex;
