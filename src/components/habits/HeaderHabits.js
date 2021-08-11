@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { HeaderStyles } from "./stylesHabits";
 
 export default function HeaderHabits({setShowAddHabitBox}) {
     return (
@@ -9,31 +9,3 @@ export default function HeaderHabits({setShowAddHabitBox}) {
 
     );
 }
-
-const HeaderStyles = styled.div`
-    width: 100%;
-    height: 100px;
-    padding: 0 20px;
-    background-color: #f2f2f2;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    top: 70px;
-    left:0;
-
-    h1 {
-        font-size: 20px;
-        color: #126BA5;
-    }
-
-    button {
-        font-size: 25px;
-        font-weight: bold;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        padding: 3px 12px;
-        background-color: #55B3F7;
-    }
-`;

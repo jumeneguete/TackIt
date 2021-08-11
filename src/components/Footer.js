@@ -1,22 +1,25 @@
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles} from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import HabitContext from "./contexts/HabitContext";
+import { useContext, useEffect } from "react";
 
 export default function Footer() {
-    const history = useHistory();
+    const {todayHabits, getTodayHabits, habits} =useContext(HabitContext); 
+    const concludedToday = todayHabits.filter(t => t.done);
+    const percentage = parseInt((concludedToday.length / todayHabits.length) * 100);
 
-    //const concludedToday = todayHabits.filter(t => t.done);
-    //const percentage = parseInt((concludedToday.length / todayHabits.length) * 100)
+    useEffect(() => getTodayHabits(), [habits]);    
 
     return (
         <FooterStyle>
-            <Link onClick={() => history.push("/habits")}><span>Hábitos</span></Link>
+            <Link to={"/habits"}><span>Hábitos</span></Link>
             <Link to={"/today"}>
             <div label="Background">
                 <CircularProgressbar
-                    // value={percentage}
-                    // text={`${percentage}%`}
+                    value={percentage}
+                    text={"Hoje"}
                     background
                     backgroundPadding={6}
                     styles={buildStyles({

@@ -1,7 +1,7 @@
 import GlobalStyle from "../GlobalStyle";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "./login_and_signup/Login";
-import SignUp from "./login_and_signup/SingUp";
+import Login from "./LonginSignUp/Login";
+import SignUp from "./LonginSignUp/SingUp";
 import Habits from "./habits/Habits";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -9,15 +9,18 @@ import Today from "./today/Today";
 import { useEffect, useState } from "react";
 import UserContext from "./contexts/UserContext";
 import History from "./history/History";
-import TodayContext from "./contexts/TodayContext";
+import HabitContext from "./contexts/HabitContext";
 import axios from "axios";
 
 export default function App() {
     const alreadyLoggedIn = localStorage.getItem("lastLogin");
     const [user, setUser] = useState(alreadyLoggedIn && JSON.parse(alreadyLoggedIn));
     const [todayHabits, setTodayHabits] = useState([]);
+    const [habits, setHabits] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => getTodayHabits(), []);
+
+    function getTodayHabits() {
         const config = {
             headers: {
                 Authorization: `Bearer ${user?.token}`
@@ -31,7 +34,7 @@ export default function App() {
         request.catch((error) => {
             console.log(error)
         });
-    }, []);
+    }
 
     return (
         <>
@@ -39,7 +42,7 @@ export default function App() {
             <BrowserRouter>
                 <Switch>
                     <UserContext.Provider value={{ user, setUser }}>
-                        <TodayContext.Provider value={{ todayHabits, setTodayHabits }} >
+                        <HabitContext.Provider value={{ todayHabits, setTodayHabits, getTodayHabits, habits, setHabits }} >
                             <Route path="/" exact>
                                 <Login />
                             </Route>
@@ -47,21 +50,21 @@ export default function App() {
                                 <SignUp />
                             </Route>
                             <Route path="/habits" exact>
-                                <Header image={user.image} />
+                                <Header image={user?.image} />
                                 <Habits />
-                                <Footer />
+                                <Footer habits={habits} />
                             </Route>
                             <Route path="/today" exact>
-                                <Header image={user.image} />
+                                <Header image={user?.image} />
                                 <Today />
-                                <Footer />
+                                <Footer habits={habits} />
                             </Route>
                             <Route path="/history" exact>
-                                <Header image={user.image} />
+                                <Header image={user?.image} />
                                 <History />
                                 <Footer />
                             </Route>
-                        </TodayContext.Provider>
+                        </HabitContext.Provider>
                     </UserContext.Provider>
                 </Switch>
             </BrowserRouter>

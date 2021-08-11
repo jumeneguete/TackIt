@@ -1,5 +1,5 @@
 import logotipo from "../../img/logotipo.png";
-import styled from "styled-components"
+import { Logotipo } from "./styleLoginSignUp";
 
 export default function LogoImg () {
 
@@ -7,8 +7,3 @@ export default function LogoImg () {
         <Logotipo src={logotipo} alt="Logotipo TrackIt"/>
     );
 }
-
-const Logotipo = styled.img`
-    width: 180px;
-    margin-bottom: 30px;
-`;

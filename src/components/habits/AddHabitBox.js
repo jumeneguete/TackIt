@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
-import styled from "styled-components";
+import { Container, InputStyle, Days, Day, Buttons, Button } from "./stylesHabits";
 import axios from "axios";
 import UserContext from "../contexts/UserContext";
 import ThreeDotsHabits from "../ThreeDotsHabits";
 
-export default function AddHabitBox({ display, setShowAddHabitBox, habits, setHabits }) {
+export default function AddHabitBox({ display, setShowAddHabitBox }) {
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState("");
@@ -71,7 +71,7 @@ export default function AddHabitBox({ display, setShowAddHabitBox, habits, setHa
     }
 
     return (
-        <Container display={display}>
+        <Container show={display}>
             <form onSubmit={addHabit}>
                 <InputStyle type="text" disabled={loading ? true : false} placeholder="nome do hábito" value={name} onChange={(e) => setName(e.target.value)} />
                 <Days>
@@ -89,91 +89,3 @@ export default function AddHabitBox({ display, setShowAddHabitBox, habits, setHa
     );
 }
 
-const Container = styled.div`
-    width: 95%;
-    padding: 15px 0;
-    margin: 0 auto 20px auto;
-    background-color: #fff;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    display: ${props => props.display ? "block" : "none"};
-
-    & > form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-    }
-`;
-
-const InputStyle = styled.input`
-    width: 90%;
-    padding-left: 10px;
-    margin: 10px auto;
-    height: 45px;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-
-        &::placeholder{
-            font-size: 18px;
-            color: #D5D5D5;
-            padding-left: 10px;
-        }
-        &:focus{
-            box-shadow: 0 0 0 0;
-            outline: 0;
-        }
-`;
-
-const Days = styled.div`
-    width: 90%;
-    margin: 10px auto;
-    display: flex;
-`;
-
-const Day = styled.div`
-    width: 35px;
-    text-align: center;
-    font-size: 20px;
-    color: #D5D5D5;
-    background-color: #fff;
-    margin: -7px 10px 15px 0;
-    padding: 5px 10px;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
-
-    &.unavailable {
-        background-color: #D5D5D5;
-        color: #fff;
-    }
-
-    &.disabled {
-        cursor: not-allowed;
-    }
-
-`;
-
-const Buttons = styled.div`
-width: 90%;
-    display: flex;
-    justify-content: flex-end;
-    background-color: ${props => props.bgColor ? "#55B3F7" : "#fff"};
-`;
-
-const Button = styled.button`
-    color: #fff;
-    font-size:20px;
-    font-weight:bold;
-    letter-spacing: 1px;
-    padding: 8px 15px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 5px;
-    color: ${props => props.bgColor ? "#fff" : "#55B3F7"};
-    background-color: ${props => props.bgColor ? "#55B3F7" : "#fff"};
-`;

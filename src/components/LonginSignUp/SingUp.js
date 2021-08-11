@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import styled from "styled-components";
+import { SignUpPageStyle } from "./styleLoginSignUp";
 import ThreeDots from "../ThreeDots";
 import Button from "./Button";
 import Input from "./Input"
@@ -32,7 +32,7 @@ export default function SignUp() {
     }
 
     return (
-        <Main>
+        <SignUpPageStyle>
             <LogoImg />
             <form onSubmit={register}>
                 <Input type="email" disabled={loading ? true : false} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="email" />
@@ -42,35 +42,6 @@ export default function SignUp() {
                 <Button type="submit" disabled={loading ? true : false} >{loading ? <ThreeDots /> : "Cadastrar"}</Button>
             </form>
             <Link to={"/"}><p>Já tem uma conta? Faça login!</p></Link>
-        </Main>
+        </SignUpPageStyle>
     );
 }
-
-const Main = styled.div`
-height:100vh;
-margin: 0 auto;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-background: #fff;
-
-    p {
-        color: #55B3F7;
-        text-decoration: underline;
-        margin-top: 20px;
-    }
-
-    p:hover{
-            color: #317bb0;
-        }
-
-    form {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-`;
