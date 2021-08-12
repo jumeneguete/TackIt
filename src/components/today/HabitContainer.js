@@ -15,8 +15,8 @@ export default function HabitContainer({ name, done, id, seq, max }) {
             }
         };
 
-        const url = done ? `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
-                    : `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`;
+        const url = done ? `${process.env.REACT_APP_HOST}/habits/${id}/uncheck`
+                    : `${process.env.REACT_APP_HOST}/habits/${id}/check`;
 
         const request = axios.post(url, {}, config);
         request.then(() => {

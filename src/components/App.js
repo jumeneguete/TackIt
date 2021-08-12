@@ -27,7 +27,7 @@ export default function App() {
             }
         };
 
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config)
+        const request = axios.get(`${process.env.REACT_APP_HOST}/habits/today`, config)
         request.then((response) => {
             setTodayHabits(response.data);
         });

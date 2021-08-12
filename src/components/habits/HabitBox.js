@@ -12,7 +12,7 @@ export default function HabitBox({ display, setHideMessage }) {
     useEffect(() => loadHabits(), []);
 
     function loadHabits() {
-        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+        const request = axios.get(`${process.env.REACT_APP_HOST}/habits`, config);
         request.then((response) => {
             setHabits(response.data);
             response.data.length === 0 ? setHideMessage(false) : setHideMessage(true);
@@ -26,7 +26,7 @@ export default function HabitBox({ display, setHideMessage }) {
         const confirmation = window.confirm(`Você realmente deseja apagar "${name}"?`);
 
         if (confirmation === true) {
-            const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`, config);
+            const promise = axios.delete(`${process.env.REACT_APP_HOST}/habits/${id}`, config);
             promise.then(() => {
                 loadHabits();
             });

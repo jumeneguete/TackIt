@@ -50,7 +50,7 @@ export default function AddHabitBox({ display, setShowAddHabitBox }) {
             }
         };
 
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+        const request = axios.post(`${process.env.REACT_APP_HOST}/habits`, body, config);
         setLoading(true);
         request.then(() => {
             setShowAddHabitBox(false);

@@ -21,7 +21,7 @@ export default function SignUp() {
         const body = { name, email, password, image }
 
         
-        const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", body);
+        const request = axios.post(`${process.env.REACT_APP_HOST}/auth/sign-up`, body);
         setLoading(true);
         request.then(() => {history.push("/")});
         request.catch(() => {
